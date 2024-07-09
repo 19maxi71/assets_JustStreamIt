@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <title>JustStreamIt</title>
+</head>
+<body>
+    <div class="container border border-primary border-dark border-2 p-5 pt-1 my-1">
+        
+            <header class="header d-flex justify-content-between align-items-center p-2 my-3 border border-dark">
+                <h1 class="header_logo"><img src="images/image1.png" alt="JustStreamIt" class="img-fluid"></h1>
+                <h1 class="header_title">Vidéos à la demande</h1>
+            </header>
+            <script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
+            <main class="main container mt-4 justify-content-between align-items-center">
+                <h2 class="section_best_film fw-bold">Meilleur film</h2>
+                <section class="best_film row mb-4 p-3 border border-dark border-3">
+                    <div class="best_film_logo col-md-3">
+                        <img id="best-film-image" src="" alt="BEST-FILM-IMAGE" class="img-fluid" data-id="" data-toggle="modal" data-target="#bestFilmModal">
+                    </div>
+                    <div class="best_film_content col-md-8">
+                        <h3 id="best-film-title" class="best_film_title fw-bold">BEST-FILM-TITLE</h3>
+                        <p id="best-film-description" class="best_film_description">BEST-FILM-DESCRIPTION</p>
+                        <button id="openBestFilmModal" class="details_button btn btn-danger" data-id="">Details</button>
+                    </div>
+                </section>
+            
+                <div class="modal fade" id="bestFilmModal" tabindex="-1" aria-labelledby="bestFilmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="container border border-dark border-5 p-0">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="bestFilmModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="filmDetailsContent"></div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="close_modal_btn btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+
+                <h2 class="section_category fw-bold" data-category="mystery">Mystery</h2>
+                <section id="sectionMystery" class="movies-grid"></section>
+                    
+                        <button type="button" class="showMoreBtn btn btn-danger" id="showMoreBtn">Voir plus</button>
+                  
+
+                
+
+                <h2 class="section_category fw-bold" data-category="action">Action</h2>
+                <section id="sectionAction" class="movies-grid"></section>
+                    <button type="button" class="showMoreBtn btn-danger" id="showMoreBtn">Voir plus</button>
+
+                <h2 class="section_category fw-bold" data-category="adventure">Adventure</h2>
+                <section id="sectionAdventure" class="movies-grid"></section>
+                    <button type="button" class="showMoreBtn btn-danger" id="showMoreBtn">Voir plus</button> 
+
+                <h2 class="section_categories fw-bold">Autres:</h2>
+                <section class="categories my-4 boxs movies-grid">
+                    <select id="categorySelect1" class="form-select">
+                        <!-- <option value="">LES ELEMENTS OPTIONS IRONT ICI</option>  -->
+                    </select>
+                </section>
+                <section id="sectionAutre1" class="movies-grid"></section>
+                <button type="button" class="showMoreBtn btn-danger" id="showMoreBtn">Voir plus</button> 
+
+                <h2 class="section_categories fw-bold">Autres:</h2>
+                <section class="categories my-4 boxs movies-grid">
+                    <select id="categorySelect2" class="form-select movies-grid">
+                        <!-- <option value="">LES ELEMENTS OPTIONS IRONT ICI</option>  -->
+                    </select>
+                </section> 
+                <section id="sectionAutre2" class="movies-grid"></section> 
+                <button type="button" class="showMoreBtn btn-danger" id="showMoreBtn">Voir plus</button> 
+            <footer class="footer d-flex justify-content-between align-items-center">
+                <p class="footer_text">JustStreamIt - 2024</p>
+                <p class="footer_text">Réalisé par M.Y.</p>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
