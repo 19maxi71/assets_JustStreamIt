@@ -25,6 +25,8 @@ function fetchBestMovie() {
         .catch(error => console.error('Error:', error));
 }
 
+
+// Function to fetch all categories from API
 function fetchAllCategories(pageNumber = 1, accumulatedCategories = []) {
     fetch(`http://localhost:8000/api/v1/genres/?page=${pageNumber}`)
         .then(response => response.json())
@@ -43,6 +45,8 @@ function fetchAllCategories(pageNumber = 1, accumulatedCategories = []) {
         .catch(error => console.error('Error:', error));
 }
 
+
+// Function to populate the category dropdown lists
 function populateCategoryList(categories) {
     for (let i = 1; i <= 2; i++) {
         const selectElement = document.getElementById(`categorySelect${i}`);
@@ -62,6 +66,7 @@ function populateCategoryList(categories) {
 }
 
 
+// Function to create a movie grid
 function createMovieList(section, films) {
     section.innerHTML = ''; // efface le contenu de la section avant de la remplir
   
@@ -95,6 +100,8 @@ function createMovieList(section, films) {
     });
 }
 
+
+// Function to fetch movies by category
 function fetchCategoryMovies(category, sectionId) {
     let allFilms = []; // Étape 1: Initialiser allFilms
 
@@ -108,7 +115,7 @@ function fetchCategoryMovies(category, sectionId) {
                 fetch(data.next) // Utiliser l'URL de la prochaine page directement
                     .then(response => response.json())
                     .then(data => {
-                        const nextFilm = data.results[0]; // Prendre uniquement le premier film
+                        const nextFilm = data.results[0]; // Prendre uniquement le premier film de la deuxième page
                         allFilms.push(nextFilm); // Ajouter ce film à allFilms
 
                         const section = document.querySelector(sectionId);
@@ -135,13 +142,15 @@ function fetchCategoryMovies(category, sectionId) {
 }
 
     
-
+// Function to initialize category movies
 function initCategoryMovies() {
     fetchCategoryMovies('mystery', '#sectionMystery');
     fetchCategoryMovies('action', '#sectionAction');
     fetchCategoryMovies('adventure', '#sectionAdventure');
 }
 
+
+// Function to open the modal with movie details
 function openModal(movieId) {
     const filmDetailsContent = document.getElementById('filmDetailsContent');
     const bestFilmModalLabel = document.getElementById('bestFilmModalLabel');
@@ -190,7 +199,7 @@ for (let i = 1; i <= 2; i++) {
 }
 
 
-
+// Function for button to show more movies
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.showMoreBtn').forEach(btn => {
         btn.addEventListener('click', function () {
@@ -274,290 +283,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-
-
-
-
-// function fetchCategoryMovies(category, sectionId) {
-//     fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const films = data.results;
-//             const allFilms = allFilms.concat(films);
-//             const section = document.querySelector(sectionId);
-//             if (!section) {
-//                 console.error(`L'élément avec l'ID ${sectionId} n'existe pas.`);
-//                 return;
-//             }
-
-//             createMovieList(section, allMovies);
-
-//             if (data.next) {
-//                 fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&page=2&sort_by=-imdb_score`)
-//                     .then(response => response.json())
-//                     .then(data => {
-//                         console.log(data);
-//                         const nextFilm = data.results[0];
-//                         films.push(nextFilm);
-//                         if (!section) {
-//                             console.error(`L'élément avec l'ID ${sectionId} n'existe pas.`);
-//                             return;
-//                         }
-
-//                         createMovieList(section, nextData); // Only take the first element from page 2
-
-//                     })
-//                     .catch(error => console.error('Error:', error));
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// }
-
-// function fetchAllCategories(pageNumber = 1, accumulatedCategories = []) {
-//     fetch(`http://localhost:8000/api/v1/genres/?page=${pageNumber}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const categories = data.results;
-//             const allCategories = accumulatedCategories.concat(categories);
-
-//             if (data.next) {
-//                 // If there is a next page, make a recursive call with accumulated categories
-//                 fetchAllCategories(pageNumber + 1, allCategories);
-//             } else {
-//                 // If there are no more pages, call populateCategoryList with all accumulated categories
-//                 populateCategoryList(allCategories);
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// }
-
-  
-
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const showMoreBtn = document.getElementById('showMoreBtn');
-
-//     function updateDisplay() {
-//         const movies = document.querySelectorAll('.movie');
-//         const width = window.innerWidth;
-//         let initialShow;
-
-//         if (width < 576) {
-//             initialShow = 2;
-//         } else if (width < 768) {
-//             initialShow = 4;
-//         } else {
-//             initialShow = 6;
-//         }
-
-//         movies.forEach((movie, index) => {
-//             if (index < initialShow) {
-//                 movie.classList.remove('hidden');
-//             } else {
-//                 movie.classList.add('hidden');
-//             }
-//         });
-
-//         showMoreBtn.style.display = initialShow >= movies.length ? 'none' : 'block';
-//     }
-
-//     showMoreBtn.addEventListener('click', function () {
-//         const hiddenMovies = document.querySelectorAll('.movie.hidden');
-//         const width = window.innerWidth;
-//         let showCount = 2;
-
-//         if (width < 576) {
-//             showCount = 2;
-//         } else if (width < 768) {
-//             showCount = 2;
-//         } else {
-//             showCount = 2;
-//         }
-
-//         hiddenMovies.forEach((movie, index) => {
-//             if (index < showCount) {
-//                 movie.classList.remove('hidden');
-//             }
-//         });
-
-//         if (document.querySelectorAll('.movie.hidden').length === 0) {
-//             showMoreBtn.style.display = 'none';
-//         }
-//     });
-
-//     window.addEventListener('resize','refresh', updateDisplay);
-//     updateDisplay();
-// });
-
-
-// function fetchCategoryMovies(category, sectionId) {
-//     fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&sort_by=-imdb_score`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const section = document.querySelector(sectionId);
-//             if (!section) {
-//                 console.error(`L'élément avec l'ID ${sectionId} n'existe pas.`);
-//                 return;
-//             }
-//             section.innerHTML = '';
-// document.addEventListener('DOMContentLoaded', function () {
-//     const showMoreBtn = document.getElementById('showMoreBtn');
-
-//     function updateDisplay() {
-//         const movies = document.querySelectorAll('.movie');
-//         const width = window.innerWidth;
-//         let initialShow;
-
-//         if (width < 576) {
-//             initialShow = 2;
-//         } else if (width < 768) {
-//             initialShow = 4;
-//         } else {
-//             initialShow = 6;
-//         }
-
-//         movies.forEach((movie, index) => {
-//             if (index < initialShow) {
-//                 movie.classList.remove('hidden');
-//             } else {
-//                 movie.classList.add('hidden');
-//             }
-//         });
-
-//         showMoreBtn.style.display = initialShow >= movies.length ? 'none' : 'block';
-//     }
-
-//     showMoreBtn.addEventListener('click', function () {
-//         const hiddenMovies = document.querySelectorAll('.movie.hidden');
-//         const width = window.innerWidth;
-//         let showCount = 2;
-
-//         if (width < 576) {
-//             showCount = 2;
-//         } else if (width < 768) {
-//             showCount = 2;
-//         } else {
-//             showCount = 2;
-//         }
-
-//         hiddenMovies.forEach((movie, index) => {
-//             if (index < showCount) {
-//                 movie.classList.remove('hidden');
-//             }
-//         });
-
-//         if (document.querySelectorAll('.movie.hidden').length === 0) {
-//             showMoreBtn.style.display = 'none';
-//         }
-//     });
-
-//     window.addEventListener('resize','refresh', updateDisplay);
-//     updateDisplay();
-// });
-//             data.results.slice(0, 5).forEach(movie => {
-//                 const movieDiv = document.createElement('div');
-//                 movieDiv.className = 'col-12 col-md-6 col-lg-4 mb-3 box';
-//                 movieDiv.innerHTML = `
-//                     <div class="movie position-relative">
-//                         <img src="${movie.image_url}" alt="${movie.title}" class="img-fluid"></img>
-//                         <div class="banner">
-//                             <span class="movie-title">${movie.title}</span>
-//                             <button class="details_button position-absolute top-50 start-50 translate-middle btn btn-dark btn-sm" data-id="${movie.id}">Détails</button>
-//                         </div>
-//                     </div>
-//                 `;
-//                 section.appendChild(movieDiv);
-//             });
-
-//             section.querySelectorAll('.details_button').forEach(button => {
-//                 button.addEventListener('click', function() {
-//                     const movieId = this.getAttribute('data-id');
-//                     openModal(movieId);
-//                 });
-//             });
-
-//             if (data.next) {
-//                 fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&page=2&sort_by=-imdb_score`)
-//                     .then(response => response.json())
-//                     .then(nextData => {
-//                         const nextMovie = nextData.results[0];
-//                         const nextMovieDiv = document.createElement('div');
-//                         nextMovieDiv.className = 'col-12 col-md-6 col-lg-4 mb-3 box';
-//                         nextMovieDiv.innerHTML = `
-//                             <div class="movie position-relative">
-//                                 <img src="${nextMovie.image_url}" alt="${nextMovie.title}" class="img-fluid"></img>
-//                                 <div class="banner">
-//                                         <span class="movie-title">${nextMovie.title}</span>
-//                                         <button class="details_button position-absolute top-50 start-50 translate-middle btn btn-dark btn-sm" data-id="${nextMovie.id}">Détails</button>
-//                                 </div>
-//                             </div>
-//                         `;
-//                         section.appendChild(nextMovieDiv);
-//                     })
-//                     .catch(error => console.error('Error:', error));
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// }
-
-// function fetchAllCategoryMovies(category, sectionId) {
-//     fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&page=1&sort_by=-imdb_score`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const section = document.querySelector(sectionId);
-//             if (section) section.innerHTML = '';
-
-//             data.results.slice(0, 5).forEach(movie => {
-//                 const movieDiv = document.createElement('div');
-//                 movieDiv.className = 'col-12 col-md-6 col-lg-4 mb-3 box';
-//                 movieDiv.innerHTML = `
-//                     <div class="movie position-relative">
-//                         <img src="${movie.image_url}" alt="${movie.title}" class="img-fluid"></img>
-//                         <div class="banner">
-//                             <span class="movie-title">${movie.title}</span>
-//                             <button class="details_button position-absolute top-50 start-50 translate-middle btn btn-dark btn-sm" data-id="${movie.id}">Détails</button>
-//                         </div>    
-//                     </div>
-//                 `;
-//                 section.appendChild(movieDiv);
-//             });
-
-//             section.querySelectorAll('.details_button').forEach(button => {
-//                 button.addEventListener('click', function() {
-//                     const movieId = this.getAttribute('data-id');
-//                     openModal(movieId);
-//                 });
-//             });
-
-//             if (data.next) {
-//                 fetch(`http://localhost:8000/api/v1/titles/?genre=${category}&page=2&sort_by=-imdb_score`)
-//                     .then(response => response.json())
-//                     .then(secondPageData => {
-//                         const secondPageMovie = secondPageData.results[0];
-
-//                         const secondPageMovieDiv = document.createElement('div');
-//                         secondPageMovieDiv.className = 'col-12 col-md-6 col-lg-4 mb-3 box';
-//                         secondPageMovieDiv.innerHTML = `
-//                             <div class="movie position-relative">
-//                                 <img src="${secondPageMovie.image_url}" alt="${secondPageMovie.title}" class="img-fluid"></img>
-//                                 <div class="banner">
-//                                     <span class="movie-title">${secondPageMovie.title}</span>
-//                                     <button class="details_button position-absolute top-50 start-50 translate-middle btn btn-dark btn-sm" data-id="${secondPageMovie.id}">Détails</button>
-//                                 </div>    
-//                             </div>
-//                         `;
-//                         section.appendChild(secondPageMovieDiv);
-
-//                         section.querySelectorAll('.details_button').forEach(button => {
-//                             button.addEventListener('click', function() {
-//                                 const movieId = this.getAttribute('data-id');
-//                                 openModal(movieId);
-//                             });
-//                         });
-//                     })
-//                     .catch(error => console.error('Error:', error));
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// }
